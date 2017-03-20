@@ -84,7 +84,6 @@ def dashboard(request):
     DBUSER = client['users']
     users = DBUSER.get_view_result('_design/fetch', 'byUsername')
     user = DBUSER.get_view_result('_design/fetch', 'byUsername')[request.user.username]
-    #Fetching loggin user by it's unique id
     user = DBUSER[user[0]['id']]
     subscribeList = user['subscribeList']
     newList = []
