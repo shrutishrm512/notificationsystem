@@ -33,8 +33,7 @@ def loginUser(request):
             userList = DBUSER.get_view_result('_design/fetch', 'byUsername')[username]
             login(request, user)
             #If user exists in database, then log in and display dashboard page
-            if userList[0]['value']['designation'] == 'User':
-                return redirect('/dashboard')
+            return redirect('/dashboard')
         
         else:
         	#When user does not exists, display message 
