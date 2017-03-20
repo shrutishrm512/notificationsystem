@@ -17,7 +17,7 @@ def mainpage(request):
 	#If user is already logged in, then directly redirect to dashboard
 	if request.user.is_authenticated:
 		return redirect('/dashboard')
-    return render(request, 'notification/main.html')
+	return render(request, 'notification/main.html')
 
 @csrf_protect
 def loginUser(request):
