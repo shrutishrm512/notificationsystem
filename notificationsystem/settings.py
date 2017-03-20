@@ -25,7 +25,7 @@ SECRET_KEY = '#5e34-+8k!+ko2w*1@$r&6d5f&d=l2$gu+4gav-+f^r6x6a02l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['notifysystem.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['notifisystem.herokuapp.com', 'notifysystem.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 
