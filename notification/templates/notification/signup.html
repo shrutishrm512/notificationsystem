@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<head>
+<html>
+    <meta charset="UTF-8" />
+    <title>Notification System | Sign Up</title>
+    {% load static %}
+    <link rel="shortcut icon" href="../favicon.ico"> 
+    <link rel="stylesheet" type="text/css" href="{% static "notification/css/demo.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "notification/css/style.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "notification/css/animate-custom.css" %}" />
+</head>
+<style>
+body{
+    background: url('static/notification/images/hero.jpg') ;
+    font-weight: 400;
+    font-size: 15px;
+    color: #FF5274;
+}
+</style>
+<body>
+    <div class="container">
+        <header>
+            <h1>Notification System</h1>
+        </header>
+        
+        <section>               
+            <div id="container_demo" >
+                <div id="wrapper">
+                    <div id="login" class="animate form">
+                        <form method="POST" onsubmit="return check(this)" action='/signup' autocomplete="on"> 
+				<p>
+                                <label for="fullName" class="uname" data-icon="u">Your name</label>
+                                <input id="fullName" name="fullName" required="required" type="text" placeholder="XYZ" />
+                            </p>
+                            <p> 
+                                <label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
+                                <input id="emailsignup" name="emailsignup" required="required" type="text" placeholder="xyz@yahoo.com" />
+                            </p>
+                            <p>
+                                <label for="usernamesignup" class="uname" data-icon="u">Your username</label>
+                                <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="mysuperusername690" />
+                            </p>
+                            <p> 
+                                <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
+                                <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            </p>
+                            <p> 
+                                <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
+                                <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            </p>
+                            <p id="msg">
+                                {{msg}}
+                            </p>
+                            {% csrf_token %}
+                            <p class="signin button"> 
+                                <input type="submit" value="Sign up"/> 
+                            </p>
+                            <p class="change_link">  
+                                Already a member ?
+                                <a href="/login" class="to_register"> Go and log in </a>
+                            </p>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>  
+        </section>
+    </div>
+</body>
+<script type="text/javascript">
+    function check(element){
+        if(document.getElementById("passwordsignup_confirm").value!=document.getElementById("passwordsignup").value){
+            document.getElementById("msg").innerHTML = "Passwords do not match";
+            return false;
+        }
+    }
+</script>
+</html>

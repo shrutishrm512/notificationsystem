@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+<html>
+    <meta charset="UTF-8" />
+    <title>Notification System| Login</title>
+    {% load static %}
+    <link rel="shortcut icon" href="../favicon.ico"> 
+    <link rel="stylesheet" type="text/css" href="{% static "notification/css/demo.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "notification/css/style.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "notification/css/animate-custom.css" %}" />
+</head>
+<style>
+body{
+    background: url(static/notification/images/hero.jpg) ;
+    font-weight: 400;
+    font-size: 15px;
+    color: #FF5274;
+}
+</style>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Notification System</h1>
+        </header>
+        
+        <section>               
+            <div id="container_demo" >
+                <div id="wrapper">
+                    <div id="login" class="animate form noti">
+                        <form autocomplete="on" method="POST">
+                            <h1>Log in</h1> 
+                            <p> 
+                                <label for="username" class="uname" data-icon="u" > Your email or username </label>
+                                <input id="username" name="username" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+                            </p>
+                            <p> 
+                                <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+                            {% csrf_token %}
+                                <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" /> 
+                            </p>
+                            <div id='msg'>{{msg}}</div>
+                            <p class="login button"> 
+                                <input type="submit" class="btn btn-fill btn-large btn-margin-right" value="Login" />
+                            </p>                           
+                        </form>
+                    </div>                  
+                </div>
+            </div>  
+        </section>
+    </div>
+</body>
+</html>

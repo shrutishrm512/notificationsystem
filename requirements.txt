@@ -1,0 +1,13 @@
+cloudant==2.4.0
+cssselect==1.0.1
+dj-database-url==0.4.2
+Django==1.10.6
+django-richtextfield==1.1
+gunicorn==19.7.0
+heroku==0.1.4
+html5lib==0.999999999
+python-dateutil==1.5
+requests==2.13.0
+six==1.10.0
+webencodings==0.5
+whitenoise==3.3.0

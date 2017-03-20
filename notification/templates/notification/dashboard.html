@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <title>Gossip Girls| Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static "notification/css/bootstrap.min.css" %}">
+    <link href="{% static "notification/css/sidebar.css" %}" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static "notification/js/bootstrap.min.js" %}"></script>
+</head>
+<body style="height: 100vh; background-color: #F5F5F5">
+    <nav class="navbar navbar-inverse" style="vertical-align: middle; padding-right: 4px; margin: 0px 0px 0px 0px">
+        <div class="container-fluid" style="padding: 0px 18px 0px 0px;">
+            <ul class="nav navbar-nav">
+                <li style="cursor: pointer;"><a style="font-size:18px" data-toggle="collapse" id="menu-toggle-2"><span class="glyphicon glyphicon-menu-hamburger"></span></a></li>
+            </ul>
+            <div class="navbar-header">
+                <span class="navbar-brand">Notification System</span>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li style="line-height: 2; padding-top: 2%;">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle">
+                    {% if i is not 0 %}
+                     <span class="glyphicon glyphicon-bell"><span class="badge" style="background: red; top: -15px; left: -7px; position: relative;">{{i}}</span></span>
+                    {% else %}
+                     <span class="glyphicon glyphicon-bell"></span>
+                    {% endif %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for notification in notificationList %}
+                        {% if notification.value.type == 'status' %}
+                        <li>
+                        <a href="read/{{notification.id}}">
+                            <div>
+                            <i class="glyphicon glyphicon-star" style="color: orange;"></i>&nbsp;{{notification.value.text}}
+                            <span class="pull-right text-muted small">{{notification.value.dateCreated}}</span>
+                            </div>
+                            </a>
+                        </li>
+                        
+                        {% elif notification.value.type == 'subscribe' %}
+                        <li>
+                        <a href="read/{{notification.id}}">
+                            <div>
+                            <i class="glyphicon glyphicon-tag" style="color: green;"></i>&nbsp;{{notification.value.text}}
+                            <span class="pull-right text-muted small">{{notification.value.dateCreated}}</span>
+                            </div>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        <li class="dropdown-footer" align="center">
+                            <a href="/notifications" align="center">
+                            See all notifications
+                            <i class="glyphicon glyphicon-chevron-right" style="color: #FF5274;"></i>
+                            </a>
+                        </li>
+                        </ul>
+                        </li>
+                
+                <li class="dropdown">
+                    <a style="margin-top: -7px; margin-bottom: -10px" class="dropdown-toggle" type="button" data-toggle="dropdown"><img src='static/notification/images/l1.jpg' style="height: 35px" class="img img-circle"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="wrapper" class="toggled-2">
+        <div id="sidebar-wrapper" style="height: 100vh">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li class="active">
+                    <a href="/dashboard"><span class="fa-stack fa-lg pull-left"><i class="glyphicon glyphicon-home"></i></span> Dashboard</a>
+                </li>
+                <li>
+                    <a href="/profile"><span class="fa-stack fa-lg pull-left"><i class="glyphicon glyphicon-user"></i></span>Profile</a>
+                </li>
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="max-height: 90vh;">
+            <div class="opinion"><div class="col-sm-12">
+                <form action="/status" method="post">
+                    <textarea style="margin-left: 70px;" rows="5" cols="100" id='body' name="body" placeholder="Update Status..." required=""></textarea>
+                    {% csrf_token %}
+                    <input type="submit"  class="btn btn-md btn-primary" value="POST">
+                </form></div>
+            </div>
+            <div class="row"><div class="col-lg-12" style="height: 15px"></div></div>
+                <div class="row"><div class="col-sm-12"></div></div>
+            {% if userList|length == 0 %}
+                <center><h3 style="color: green">No members!</center>
+            {% else %}
+                <div class="container-fluid xyz col-sm-12">
+                    
+                    <!-- set COLOR -->
+                        <div  style="padding-left: 50px; padding-right: 50px; padding-top: 30px; border-radius: 8px; background-color: #F5F5F5; " class="col-lg-12">
+                            
+                            <div class="row">
+                                    <div class="panel-group" id="accordion">
+                                        {% for users in userList %}
+                                            {% with user=users.0.value %}
+                                            
+                                            <div class="panel panel-default" style="margin-top: 5px;">
+                                                <div  class="btn btn-default btn-md btn-block">
+                                                    <h4 class="panel-title">
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-sm-3">{{user.fullName}}</div>
+                                                            <span class="col-sm-2 label-info">{{user.username}}</span>
+                                                            {% if users.1 == 0 %}                                                                
+                                                                <div class="opinion">
+                                                                <form action="/subscribe/{{user.username}}" method="post">
+                                                                {% csrf_token %}
+                                                                <input type="submit" class="btn btn-danger" value="Subscribe">
+                                                                </form>
+                                                                </div>
+                                                            {% elif users.1 == 1 %}
+                                                                
+                                                                <div class="opinion">
+                                                                <form action="/unsubscribe/{{user.username}}" method="post">
+                                                                {% csrf_token %}
+                                                                <input type="submit"  class="btn btn-danger" value="Unsubscribe">
+                                                                </form>
+                                                                </div>
+                                                            {% endif %}
+                                                            
+                                                        </div>
+                                                        </span>
+                                                    </h4>
+                                                </div>
+                                                
+                                            </div>
+                                            {% endwith %}    
+                                    {% endfor %}
+                                    {% csrf_token %}
+                                    </div>
+                                </div>
+
+                            </div>
+                        
+            </div>
+            {% endif %}
+        </div>
+    </div></h3></center></div></div></li></ul></div></nav>
+    <script>
+        $("#menu-toggle-2").click(function(e) {
+            $("#wrapper").toggleClass("toggled-2");
+            $('#menu ul').hide();
+        });
+        function selectAll(source) {
+            var checkboxes = document.getElementsByName('userList');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+        function saveChanges(){
+          document.getElementById("appSelected").submit();
+        }
+    </script>
+</body>
+</html>
